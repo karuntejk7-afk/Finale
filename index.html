@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Car Dashboard</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      background: #f5f6fa;
+    }
+    header {
+      background: #2f3640;
+      color: white;
+      padding: 20px;
+      text-align: center;
+    }
+    header h1 {
+      margin: 0;
+    }
+    .container {
+      padding: 20px;
+    }
+    .search-bar {
+      margin-bottom: 20px;
+      text-align: center;
+    }
+    .search-bar input {
+      padding: 10px;
+      width: 60%;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 20px;
+    }
+    .card {
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      overflow: hidden;
+      transition: transform 0.2s;
+    }
+    .card:hover {
+      transform: scale(1.03);
+    }
+    .card img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+    }
+    .card-content {
+      padding: 15px;
+    }
+    .card-content h3 {
+      margin: 0 0 10px;
+    }
+    .card-content p {
+      margin: 5px 0;
+      color: #555;
+    }
+    footer {
+      margin-top: 30px;
+      padding: 15px;
+      text-align: center;
+      background: #2f3640;
+      color: white;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>🚗 Car Dashboard</h1>
+    <p>Explore details of popular cars</p>
+  </header>
+
+  <div class="container">
+    <div class="search-bar">
+      <input type="text" id="search" placeholder="Search cars by name, brand, or type...">
+    </div>
+
+    <div class="card-grid" id="car-list"></div>
+  </div>
+
+  <footer>
+    <p>Car Dashboard © 2025 | Designed with ❤️</p>
+  </footer>
+
+  <script>
+    const cars = [
+      { name: "Tesla Model S", brand: "Tesla", type: "Electric", price: "$89,990", img: "https://www.tesla.com/sites/default/files/modelsx-new/social/model-s-hero-social.jpg" },
+      { name: "BMW M3", brand: "BMW", type: "Sedan", price: "$72,800", img: "https://cdn.bmwblog.com/wp-content/uploads/2020/09/2021-bmw-m3-g80-sedan-02.jpg" },
+      { name: "Audi R8", brand: "Audi", type: "Sports", price: "$142,700", img: "https://cdn.motor1.com/images/mgl/qn33r/s1/audi-r8-v10-performance-rwd.jpg" },
+      { name: "Ford Mustang", brand: "Ford", type: "Muscle", price: "$55,300", img: "https://www.ford.com/is/image/Ford/2024-mustang-hero" },
+      { name: "Toyota Supra", brand: "Toyota", type: "Sports", price: "$54,500", img: "https://toyota-cms-media.s3.amazonaws.com/wp-content/uploads/2022/04/2023_GR_Supra_3.0_Premium_001-scaled.jpg" },
+      { name: "Lamborghini Huracán", brand: "Lamborghini", type: "Supercar", price: "$203,674", img: "https://www.lamborghini.com/sites/it-en/files/DAM/lamborghini/gateway-family/huracan-evo/2023/01_23/Huracan_STO_03_M.jpg" },
+    ];
+
+    const carList = document.getElementById("car-list");
+    const search = document.getElementById("search");
+
+    function displayCars(filter = "") {
+      carList.innerHTML = "";
+      const filteredCars = cars.filter(c =>
+        c.name.toLowerCase().includes(filter.toLowerCase()) ||
+        c.brand.toLowerCase().includes(filter.toLowerCase()) ||
+        c.type.toLowerCase().includes(filter.toLowerCase())
+      );
+      
+      if (filteredCars.length === 0) {
+        carList.innerHTML = `<p>No cars found.</p>`;
+        return;
+      }
+
+      filteredCars.forEach(car => {
+        const card = document.createElement("div");
+        card.className = "card";
+        card.innerHTML = `
+          <img src="${car.img}" alt="${car.name}">
+          <div class="card-content">
+            <h3>${car.name}</h3>
+            <p><b>Brand:</b> ${car.brand}</p>
+            <p><b>Type:</b> ${car.type}</p>
+            <p><b>Price:</b> ${car.price}</p>
+          </div>
+        `;
+        carList.appendChild(card);
+      });
+    }
+
+    search.addEventListener("input", (e) => displayCars(e.target.value));
+
+    // Initial load
+    displayCars();
+  </script>
+</body>
+</html>
